@@ -1,0 +1,36 @@
+<!-- Listing  -->
+  <div class="card">
+    <div class="card-header">
+      Transections
+    </div>
+    <!-- Expenses display  -->
+    <ul class="list-group mt-3" *ngFor="let personExp of expenseList?.person">
+      <li class="list-group-item list-group-item-action active">{{personExp.name}}  <span class="badge badge-light badge-pill float-right">Total: {{personExp.total | number:'.2'}}</span></li>
+      <!-- for expense  -->
+      <div *ngFor="let expList of personExp.expenses; let i = index">
+        <button class="list-group-item list-group-item-action">{{expList.title}} {{i}}: {{expList.exp | number:'.2'}}</button>
+      </div>
+      <!-- <li class="list-group-item list-group-item-action"></li> -->
+    </ul>
+
+    <ul class="list-group mt-3">
+      <li class="list-group-item list-group-item-secondary">Total Expense <span class="badge badge-light badge-pill float-right">{{expenseList?.sum | number:'.2'}}</span></li>
+      <li class="list-group-item list-group-item-secondary">Equally Share <span class="badge badge-light badge-pill float-right">{{expenseList?.equallyShare | number:'.2'}}</span></li>
+    </ul>
+  </div>
+
+  <span *ngIf="expenseList?.owes.length > 0">
+    <div class="card mt-3">
+      <div class="card-header">
+        Owe
+      </div>
+      <ul class="list-group mt-3" *ngFor="let owe of expenseList?.owes">
+        <div class="list-group" *ngIf="owe.owe > 0; else elseBlock">
+          <li class="list-group-item list-group-item-action active">{{owe.name}} have to pay <span class="badge badge-light badge-pill float-right">{{owe.owe | number:'.2'}}</span></li>
+        </div>
+        <ng-template #elseBlock>
+          <li class="list-group-item list-group-item-action active list-group-item-success">{{owe.name}} get paid <span class="badge badge-light badge-pill float-right">{{-1 * owe.owe | number:'.2'}}</span></li>
+        </ng-template>
+      </ul>
+    </div>
+  </span>

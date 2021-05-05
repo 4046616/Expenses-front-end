@@ -1,0 +1,37 @@
+<div class="container">
+  <!-- Form  -->
+  <form [formGroup]="expenseForm" class="m-3" (ngSubmit)="onSubmit()">
+    <div class="form-group"> 
+      <input type="text" id="name" class="form-control" placeholder="Name" name="name" formControlName="name">
+    </div>
+    <div formArrayName="expenses">
+      <!-- dynamic input field  -->
+      <div *ngFor="let expCtrl of expenses.controls; let i=index">
+        <div [formGroupName]="i" class="row">
+          <div class="form-group col"> 
+            <input type="text" id="title" placeholder="Title" name="title" class="form-control" formControlName="title">
+          </div>
+          <div class="form-group col"> 
+            <input type="number" placeholder="Expense" class="form-control" formControlName="exp">
+          </div>
+          <!-- remove input  -->
+          <div class="form-group col">
+            <button (click)="removeExpense(i)" class="btn btn-primary ">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col">
+        <!-- Submit  -->
+        <button type="submit" class="btn btn-primary float-right ml-2">Submit</button>
+        <!-- Add new   -->
+        <button type="button" class="btn btn-secondary float-right" (click)="addExpense()">Add</button>
+        <!-- Remove  -->
+        <!-- <button type="button" (click)="calculateExpense()">Calculate</button> -->
+      </div>
+    </div>
+  </form>
+
+  <app-expense-list [expenseList]="expenseList"></app-expense-list>
+</div>
